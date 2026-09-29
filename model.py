@@ -573,8 +573,19 @@ def assemble_encoder_layer(x, layer_params, num_heads, src_mask):
     sa_s = encoder_layer_self_attention_sublayer(x, *vals_sh, num_heads, src_mask)
     return encoder_layer_feed_forward_sublayer(sa_s, *vals_ffn)
 
-# Step 42 - stack_encoder_layers (not yet solved)
-# TODO: implement
+# Step 42 - stack_encoder_layers
+def stack_encoder_layers(x, encoder_layer_params_list, num_heads, src_mask):
+    # TODO: sequentially apply each encoder layer to the running hidden state and return the final tensor.
+    
+    hidden_state = x
+   
+    
+    
+    for param in encoder_layer_params_list:
+        hidden_state = assemble_encoder_layer(hidden_state, param, 
+        num_heads=num_heads, src_mask=src_mask)
+
+    return hidden_state
 
 # Step 43 - decoder_layer_masked_self_attention_sublayer (not yet solved)
 # TODO: implement
