@@ -752,8 +752,48 @@ def run_transformer_forward(src_ids, tgt_ids, model_params, num_heads, pad_id):
 
     return log_probs
 
-# Step 52 - init_encoder_layer_parameters (not yet solved)
-# TODO: implement
+# Step 52 - init_encoder_layer_parameters
+import torch
+import math
+
+def init_encoder_layer_parameters(d_model, num_heads, d_ff):
+    """Return a dict of leaf tensors with requires_grad=True for one encoder layer."""
+    # TODO: allocate w_q, w_k, w_v, w_o, w1, b1, w2, b2, attn_gamma, attn_beta, ffn_gamma, ffn_beta.
+    w_q = torch.randn(d_model, d_model) / (d_model ** .5)
+    w_k = torch.randn(d_model, d_model) / (d_model ** .5)
+    w_v = torch.randn(d_model, d_model) / (d_model ** .5)
+    w_o = torch.randn(d_model, d_model) / (d_model ** .5)
+
+    w1 = torch.randn(d_model, d_ff) / (d_model ** .5)
+    b1 = torch.zeros(d_ff)
+
+    w2 = torch.randn(d_ff, d_model) / (d_ff ** .5)
+    b2 = torch.zeros(d_model)
+
+    attn_gamma = torch.ones(d_model)
+    attn_beta = torch.zeros(d_model)
+
+    ffn_gamma = torch.ones(d_model)
+    ffn_beta = torch.zeros(d_model)
+    
+    params = {
+        "w_q": w_q.requires_grad_(),
+        "w_k": w_k.requires_grad_(),
+        "w_v": w_v.requires_grad_(),
+        "w_o": w_o.requires_grad_(),
+
+        "w1": w1.requires_grad_(),
+        "b1": b1.requires_grad_(),
+        "w2": w2.requires_grad_(),
+        "b2": b2.requires_grad_(),
+
+        "attn_gamma": attn_gamma.requires_grad_(),
+        "attn_beta": attn_beta.requires_grad_(),
+        "ffn_gamma": ffn_gamma.requires_grad_(),
+        "ffn_beta": ffn_beta.requires_grad_(),
+    }
+
+    return params
 
 # Step 53 - init_decoder_layer_parameters (not yet solved)
 # TODO: implement
